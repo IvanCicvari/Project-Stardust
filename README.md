@@ -1,6 +1,6 @@
 # Project-Stardust
 🛒 Cheapest Route Finder
-Cheapest Route Finder is a web and mobile application designed to help users find the cheapest items at the nearest stores. By leveraging real-time price data and mapping technologies, the app provides an optimized shopping experience, balancing cost and travel distance. Built using React for the frontend and Flask for the backend, this project utilizes SQL for efficient data management.
+is a web and mobile application designed to help users find the cheapest items at the nearest stores. By leveraging real-time price data and mapping technologies, the app provides an optimized shopping experience, balancing cost and travel distance. Built using React for the frontend and Flask for the backend, this project utilizes SQL for efficient data management.
 
 Features 🚀
 Item Search: Find specific items across multiple stores and compare prices.
