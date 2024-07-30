@@ -1,10 +1,9 @@
-import os
-
 class Config:
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'sqlite:///default.db')
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # Database URI for SQL Server
     SQLALCHEMY_DATABASE_URI = 'mssql+pyodbc://sa:SQL@.\SQLExpress2/Stardust?driver=ODBC+Driver+17+for+SQL+Server'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
     
+    # Logging configuration
     LOGGING = {
         'version': 1,
         'disable_existing_loggers': False,
