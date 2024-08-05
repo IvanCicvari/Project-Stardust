@@ -1,17 +1,14 @@
-from flask import Flask
 from Init import db
 
-app = Flask(__name__)
 
 class User(db.Model):
     __tablename__ = 'Users'
-
     id = db.Column('IDUser', db.Integer, primary_key=True, autoincrement=True)
     first_name = db.Column('FirstName', db.String(50))
     last_name = db.Column('LastName', db.String(50))
     username = db.Column('UserName', db.String(50), unique=True)
     email = db.Column('Email', db.String(100), unique=True)
-    password_hash = db.Column('Password', db.String(255))  # Renamed to password_hash
+    password_hash = db.Column('Password', db.String(255))
     country_id = db.Column('CountryID', db.Integer, db.ForeignKey('Country.IDCountry'))
     city_id = db.Column('CityID', db.Integer, db.ForeignKey('City.IDCity'))
     coordinates_id = db.Column('CoordinatesID', db.Integer, db.ForeignKey('Coordinates.IDCoordinates'))
@@ -26,20 +23,14 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
 
-
     def to_dict(self):
         return {
-            'IDUser': self.id,
             'first_name': self.first_name,
             'last_name': self.last_name,
             'username': self.username,
             'email': self.email,
-            # 'password_hash': self.password_hash, # Do not expose
             'country_id': self.country_id,
             'city_id': self.city_id,
             'coordinates_id': self.coordinates_id,
             'roles_id': self.roles_id
         }
-
-if __name__ == "__main__":
-    app.run(debug=True)

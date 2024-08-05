@@ -1,11 +1,9 @@
 # Models/Coordinates.py
 from Init import db
-
 class Coordinates(db.Model):
     __tablename__ = 'Coordinates'
-
     id = db.Column('IDCoordinates', db.Integer, primary_key=True)
-    latitude = db.Column(db.Float)  # Ensure this matches your schema
+    latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
     users = db.relationship('User', back_populates='coordinates')
 

@@ -20,7 +20,6 @@ def create_app():
             app.logger.info("Database connection successful.")
             # Ensure all tables are created (only for development)
             db.create_all()
-
         except Exception as e:
             app.logger.error(f"Database connection failed: {e}")
 
