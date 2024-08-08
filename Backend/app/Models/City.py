@@ -1,5 +1,5 @@
 # Models/City.py
-from Init import db
+from .. import db
 
 class City(db.Model):
     __tablename__ = 'City'

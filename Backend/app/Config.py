@@ -3,6 +3,8 @@ class Config:
     SQLALCHEMY_DATABASE_URI = 'mssql+pyodbc://sa:SQL@.\SQLExpress2/Stardust?driver=ODBC+Driver+17+for+SQL+Server'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
+    JWT_SECRET_KEY = 'DAC691B269B4F7CDAAE49805D1095B2649C02EC6E530876EB8E8684668225D3B'
+
     # Logging configuration
     LOGGING = {
         'version': 1,

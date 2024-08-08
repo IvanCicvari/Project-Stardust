@@ -1,5 +1,5 @@
 # Models/Country.py
-from Init import db
+from .. import db
 
 class Country(db.Model):
     __tablename__ = 'Country'

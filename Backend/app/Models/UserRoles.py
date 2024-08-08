@@ -1,5 +1,5 @@
 # Models/UserRoles.py
-from Init import db
+from .. import db
 
 class UserRoles(db.Model):
     __tablename__ = 'User_Roles'

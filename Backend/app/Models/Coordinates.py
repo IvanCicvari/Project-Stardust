@@ -1,5 +1,5 @@
 # Models/Coordinates.py
-from Init import db
+from .. import db
 class Coordinates(db.Model):
     __tablename__ = 'Coordinates'
     id = db.Column('IDCoordinates', db.Integer, primary_key=True)
