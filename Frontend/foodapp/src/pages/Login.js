@@ -13,28 +13,29 @@ function Login() {
         setError(null);
 
         try {
-            const response = await fetch('/api/login/', {
+            const response = await fetch('http://127.0.0.1:5000/api/login/', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, password }),
             });
 
             const data = await response.json();
+            console.log('Response data:', data); // Log the entire response data
 
             if (!response.ok) {
                 setError(data.msg || 'Something went wrong');
                 return;
             }
 
-            // Save the token in localStorage
+            // Save the token and user information in localStorage
             localStorage.setItem('token', data.access_token);
-            
-            // Optional: Save user information in localStorage or state
-            localStorage.setItem('user', JSON.stringify(data.user));
+            localStorage.setItem('userId', data.user.id); // Save user ID
+            localStorage.setItem('user', JSON.stringify(data.user)); // Save full user data
 
-            // Navigate to a protected route or user dashboard
-            navigate('/about-user');
+            // Navigate to the AboutUser page
+            navigate(`/AboutUser/${data.user.id}`);
         } catch (err) {
+            console.error('Error during fetch:', err);
             setError('Network error. Please try again.');
         }
     };

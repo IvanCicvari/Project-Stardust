@@ -1,6 +1,6 @@
 from .. import db
-
-
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token
 class User(db.Model):
     __tablename__ = 'Users'
     id = db.Column('IDUser', db.Integer, primary_key=True, autoincrement=True)
@@ -25,12 +25,23 @@ class User(db.Model):
 
     def to_dict(self):
         return {
+            'id': self.id,
             'first_name': self.first_name,
             'last_name': self.last_name,
             'username': self.username,
             'email': self.email,
-            'country_id': self.country_id,
-            'city_id': self.city_id,
+            'country_name': self.country.name if self.country else None,
+            'city_name': self.city.name if self.city else None,
             'coordinates_id': self.coordinates_id,
             'roles_id': self.roles_id
         }
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
+
+    def get_token(self):
+        token = create_access_token(identity=self.id)
+        return token

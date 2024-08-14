@@ -1,24 +1,21 @@
-// src/pages/AboutUser.js
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 function AboutUser() {
-    // State to store user data
+    const { userId } = useParams(); 
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    // Fetch user data when the component mounts
     useEffect(() => {
         const fetchUser = async () => {
             try {
-                // Get the token from localStorage
                 const token = localStorage.getItem('token');
                 if (!token) {
                     throw new Error('No token found. Please log in.');
                 }
 
-                // Make the request to the API with the Authorization header
-                const response = await fetch('/api/user', {
+                const response = await fetch(`http://127.0.0.1:5000/api/users/${userId}/`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
@@ -41,7 +38,7 @@ function AboutUser() {
         };
 
         fetchUser();
-    }, []);
+    }, [userId]);
 
     if (loading) {
         return <p>Loading...</p>;
@@ -60,8 +57,8 @@ function AboutUser() {
                     <p><strong>Last Name:</strong> {user.last_name}</p>
                     <p><strong>Username:</strong> {user.username}</p>
                     <p><strong>Email:</strong> {user.email}</p>
-                    <p><strong>Country ID:</strong> {user.country_id}</p>
-                    <p><strong>City ID:</strong> {user.city_id}</p>
+                    <p><strong>Country name:</strong> {user.country_name}</p>
+                    <p><strong>City name:</strong> {user.city_name}</p>
                     <p><strong>Coordinates ID:</strong> {user.coordinates_id}</p>
                     <p><strong>Role ID:</strong> {user.roles_id}</p>
                 </div>

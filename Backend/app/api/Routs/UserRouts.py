@@ -1,7 +1,8 @@
 from flask import Blueprint, jsonify, request
-from app import db
-from app.Models.User import User
+from Backend.app import db
+from Backend.app.Models.User import User
 from flask_jwt_extended import jwt_required, create_access_token
+from sqlalchemy.orm import joinedload
 
 # Create a Blueprint for the API
 bp = Blueprint('api', __name__, url_prefix='/api')
@@ -55,7 +56,8 @@ def login():
     if not data or not data.get('username') or not data.get('password'):
         return jsonify({"msg": "Missing username or password"}), 400
 
-    user = User.query.filter_by(username=data['username']).first()
+    # Include the join to load the Country relationship
+    user = User.query.options(joinedload(User.country)).filter_by(username=data['username']).first()
 
     if user is None or not user.check_password(data['password']):
         return jsonify({"msg": "Bad username or password"}), 401
@@ -89,3 +91,14 @@ def delete_user(user_id):
     db.session.delete(user)
     db.session.commit()
     return jsonify({"msg": "User deleted successfully"}), 200
+
+
+@bp.route('/users/<int:user_id>/', methods=['GET'])
+@jwt_required()
+def get_user(user_id):
+    """Get a single user by ID"""
+    user = User.query.options(
+        joinedload(User.country),
+        joinedload(User.city)
+    ).get_or_404(user_id)
+    return jsonify(user.to_dict()), 200

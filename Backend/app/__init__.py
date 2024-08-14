@@ -3,12 +3,14 @@ from flask_jwt_extended import JWTManager
 from flask_sqlalchemy import SQLAlchemy
 from logging.config import dictConfig
 from .config import Config
-from flask_swagger_ui import get_swaggerui_blueprint
+from flask_cors import CORS
 
 db = SQLAlchemy()
 
-def create_app():
+def create_app(config_class=Config):
     app = Flask(__name__)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})  # Allow all origins for API routes
+
     app.config.from_object(Config)
     
     dictConfig(app.config['LOGGING'])

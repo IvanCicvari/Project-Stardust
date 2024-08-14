@@ -1,3 +1,6 @@
+import os
+
+
 class Config:
     # Database URI for SQL Server
     SQLALCHEMY_DATABASE_URI = 'mssql+pyodbc://sa:SQL@.\SQLExpress2/Stardust?driver=ODBC+Driver+17+for+SQL+Server'
@@ -41,3 +44,21 @@ class Config:
             'level': 'DEBUG',
         },
     }
+
+class ProductionConfig(Config):
+    """Production configuration."""
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///site.db')
+    DEBUG = False
+
+class DevelopmentConfig(Config):
+    """Development configuration."""
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///dev.db')
+    DEBUG = True
+    TESTING = False
+
+class TestingConfig(Config):
+    """Testing configuration."""
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
+    DEBUG = False
+    TESTING = True
+    WTF_CSRF_ENABLED = False  # Disable CSRF for testing
